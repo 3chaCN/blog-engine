@@ -1,0 +1,10 @@
+<nav id="sidemenu-l" class="plain-list-v-left">
+                <ul class="list-menu">
+                    {% for c in categories %}
+                    <!--<li class="cat"><a class="menuitm" href="#">Item 1</a></li>
+                    <li class="cat"><a class="menuitm" href="#">Item 2</a></li>
+                    <li class="cat"><a class="menuitm" href="#">Item 3</a></li>-->
+		    <li class="cat"><a class="menuitm" href="#">{{ c.get_caption() }}</a></li>
+                    {% endfor %}
+                </ul>
+</nav>

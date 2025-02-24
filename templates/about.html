@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% block body %}
+<main class="body">
+    <section id="version">
+        <h1>About</h1>
+        <div id="{{ content.id }}">
+            {{ content.text }}
+        </div>
+    </section>
+</main>
+{% endblock %}

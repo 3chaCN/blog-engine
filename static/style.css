@@ -1,0 +1,137 @@
+a {
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+}
+
+a:hover {
+    color:rgb(184, 184, 184);
+}
+
+
+/* vertical menu */
+.menuitm {
+    text-decoration: none;
+    color:rgb(255, 255, 255);
+    padding: 10px;
+}
+
+.list-menu {
+    padding-left: 0px;
+    margin-top: 0px;
+    list-style: none;
+}
+
+.menuitm:hover {
+    color:rgb(168, 168, 168);
+}
+
+.cat {
+    padding: 5px;
+    background-color: #95afb0;
+    
+}
+
+.cat:hover{
+    background-color: #4b636d;
+}
+
+.plain-list-v-left {
+    background-color: #c2d0d0;
+   /* position: relative;
+    left: auto; */
+    /*top: 0%;*/
+    grid-area: sidenav-l;
+}
+
+.plain-list-v-right {
+    background-color: #c2d0d0;
+   /* position: relative;
+    left: auto; */
+    /*top: 0%;*/
+    grid-area: sidenav-r;
+}
+
+.body {
+    /*position: relative;
+    top: auto;*/
+    /*right: 15%;*/
+    background-color: white;
+    color:rgb(0, 0, 0);
+    grid-area: main;
+    height: 100%;
+    padding-left: 5px;
+}
+
+body {
+    /*background-color: rgb(235, 235, 235);*/
+    background-color: rgb(8, 8, 8);
+    background-repeat: no-repeat;
+    background-image: url("background.jpg");
+    display: grid;
+    grid-template:
+        [header-left] "head head head" 93px [header-right]
+        [main-left] "sidenav-l main sidenav-r" 1fr [main-right]
+        [footer-left] "sidenav-l foot sidenav-r" 60px [footer-right]
+        / 100px 1fr 150px; 
+
+    font-family: "DejaVu Sans", Verdana;
+    font-size: 12px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 0px;
+}
+
+.plain-header {
+   /* position: relative;
+    left: 15%; */
+    background-color: rgb(255, 255, 255);
+    color: black;
+    grid-area: head;
+}
+
+
+.plain-list-h {
+    padding-left: 5px;
+    padding-bottom: 10px;
+    padding-top : 7px;
+    grid-area: nav;
+    background-color: #4b636d;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.foot {
+    grid-area: foot;
+    background-color: #c2d0d0;
+    padding-left: 5px;
+    color: rgb(0, 0, 0);
+}
+
+#logo {
+    grid-area: logo;
+}
+
+#logo-r {
+    grid-area: logo-r;
+}
+
+
+#title {
+    grid-area: title;
+}
+
+#info-block {
+    grid-area: info;
+}
+
+.side-elem {
+    color: white;
+    text-align: justify;
+    padding: 5px;
+}
+
+.ban {
+    display: grid;
+    grid-template: [ban-left] "logo title logo-r" 61px [ban-right]
+    / 200px 1fr 90px; 
+}
+

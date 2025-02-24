@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% include "sidebar_l.html" %}
+{% block body %}
+<section id="post">
+	<h1>{{ content.get_title() }}</h1>
+	<em>{{ content.get_author() }} le {{ content.get_date() }}</em><br />
+        <div id="{{ content.get_id() }}">
+		{{ content.get_content()|safe }}
+        </div>
+ </section>
+{% endblock %}

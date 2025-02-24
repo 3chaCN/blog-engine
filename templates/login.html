@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% include "sidebar_l.html" %}
+{% block body %}
+<section id="textedit">
+	<h1>Administration</h1>
+	<form action="/write" method='POST'>
+		<label>Login:</label>
+		<input type="text" id="login" name="login"><br />
+		<label>Password:</label>
+		<input type="text" id="password" name="password"><br />
+		<button type="submit">Connexion</button><br />
+	</form>
+ </section>
+{% endblock %}
