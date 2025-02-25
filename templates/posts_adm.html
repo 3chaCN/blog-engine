@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% include "sidebar_l.html" %}
+{% block body %}
+<section id="post-list">
+	<h1>Derniers billets</h1>
+        	{% for pub in content %}
+                        <div id="{{ pub.get_id() }}">
+				<h2><a href="/posts/{{ pub.get_id() }}">{{ pub.get_title() }}</a></h2>
+				<em>Par {{ pub.get_author() }} le {{ pub.get_date() }}</em>
+				<a href="write/">edit</a> <a href="remove/{{ pub.get_id() }}</a>
+                                <p>{{ pub.get_content()|safe }}</p>
+                        </div>
+                {% endfor %}
+</section>
+{% endblock %}
