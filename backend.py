@@ -1,6 +1,7 @@
 import json
 import sqlalchemy
 from sqlalchemy import MetaData
+from sqlalchemy import literal_column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import String, Text, ForeignKey
@@ -136,6 +137,11 @@ def insert_post(title, data, author, category, date):
     print("Insert new post")                    
     session.add(post)
     session.commit()
+
+def check_password(username, password):
+    stmt = select(TableUsers.username, literal_column(f"blog.users.password = crypt('{password}', password)").label("p")).where(TableUsers.username == f"{username}")
+    result = session.execute(stmt)
+    return result.one()[1]
 
 try:
     get_version() 

@@ -3,10 +3,13 @@ from flask import render_template
 from flask import url_for
 from flask import request
 from flask import session
+from flask import redirect
 
 from datetime import datetime
 
-import backend
+#import backend
+from backend import get_category
+from backend import check_password
 from posts import Post
 from posts import get_last_posts
 from posts import get_post_no
@@ -18,6 +21,7 @@ LIST_SIZE=10
 #posts = get_last_posts(LIST_SIZE)
 #cats = get_all_categories()
 app = Flask(__name__)
+app.secret_key = b'8ff8aeb6c5b82390529df563b5040c226f13cb336f973d1f52cea48c38f0ce7e' 
 
 #topmenu = ["index", "about"]
 #navitm = {"index" : ["item 1", "item 2", "item 3"], "about":["item 1"]}
@@ -52,11 +56,19 @@ def post_page(index):
         return render_template("post.html", menubar=menu, categories=cats, content=get_post_no(index), footer=f)
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login_page():
-    #if request.method == 'POST':
-        # request.form['username']
+    if request.method == 'POST':
+        print("Login attempt with {}".format(request.form['login']))
+        if check_password(request.form['login'], request.form['password']) is True:
+            session['username'] = request.form['login']
+            return redirect(url_for('index_page'))
     return render_template("login.html", menubar=menu, footer=f)
+
+@app.route('/logout')
+def logout_page():
+    session.pop('username', None)
+    return redirect(url_for('index_page'))
 
 @app.route('/about')
 def about_page():
@@ -76,7 +88,7 @@ def write_page():
         
         # test if category exists. If not, create it before the post
         try:
-            c = Category(backend.get_category(request.form['category']))
+            c = Category(get_category(request.form['category']))
         except:
             c = Category(["-1", request.form['category']])
             c.add_category()

@@ -1,9 +1,9 @@
 {% extends "index.html" %}
 {% include "sidebar_l.html" %}
 {% block body %}
-<section id="textedit">
+<section id="loginform">
 	<h1>Administration</h1>
-	<form action="/write" method='POST'>
+	<form action="/login" method='POST'>
 		<label>Login:</label>
 		<input type="text" id="login" name="login"><br />
 		<label>Password:</label>
