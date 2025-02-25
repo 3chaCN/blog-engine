@@ -76,32 +76,35 @@ def about_page():
 
 @app.route('/write', methods=['POST', 'GET'])
 def write_page():
-    if request.method == 'POST':
-        print(request.form['title'])
-        print(request.form['category'])
-        print(request.form['data'])
-        """ insert_post(request.form['title'],
-                        request.form['data'],
-                        logged_user,
-                        request.form['category'])
-        """
-        
-        # test if category exists. If not, create it before the post
-        try:
-            c = Category(get_category(request.form['category']))
-        except:
-            c = Category(["-1", request.form['category']])
-            c.add_category()
+    if 'username' in session:
+        if request.method == 'POST':
+            print(request.form['title'])
+            print(request.form['category'])
+            print(request.form['data'])
+            """ insert_post(request.form['title'],
+                            request.form['data'],
+                            logged_user,
+                            request.form['category'])
+            """
+            
+            # test if category exists. If not, create it before the post
+            try:
+                c = Category(get_category(request.form['category']))
+            except:
+                c = Category(["-1", request.form['category']])
+                c.add_category()
 
-        p = Post(["-1",
-                  request.form['title'],
-                  request.form['data'],
-                  logged_user,
-                  datetime.now().strftime("%Y-%m-%d %H:%M"),
-                  request.form['category']
-                  ])
-        p.add_post()
-    return render_template("edit.html", menubar=menu_admin, footer=f)
+            p = Post(["-1",
+                      request.form['title'],
+                      request.form['data'],
+                      logged_user,
+                      datetime.now().strftime("%Y-%m-%d %H:%M"),
+                      request.form['category']
+                      ])
+            p.add_post()
+        return render_template("edit.html", menubar=menu_admin, footer=f)
+    else:
+        return redirect(url_for('index_page'))
 #@app.route('/remove/<int:index>')
 #def remove_post():
 
