@@ -43,7 +43,7 @@ def index_page():
     posts=get_last_posts(LIST_SIZE)
     cats=get_all_categories()
     if 'username' in session:
-        return render_template("posts.html", menubar=menu_admin, categories=cats, content=posts, footer=f)
+        return render_template("posts_adm.html", menubar=menu_admin, categories=cats, content=posts, footer=f)
     else:
         return render_template("posts.html", menubar=menu, categories=cats, content=posts, footer=f)
 
@@ -102,6 +102,8 @@ def write_page():
                   ])
         p.add_post()
     return render_template("edit.html", menubar=menu_admin, footer=f)
+#@app.route('/remove/<int:index>')
+#def remove_post():
 
 #@app.route('/submit', methods=['POST'])
 #    title = request.form("title")
