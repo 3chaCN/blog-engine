@@ -73,9 +73,9 @@ class TablePosts(Base):
 
 def get_posts(count=None) -> list:
     if count is not None:
-        stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).order_by(TablePosts.date).limit(count)
+        stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).order_by(TablePosts.date.desc()).limit(count)
     else:
-        stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).order_by(TablePosts.date)
+        stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).order_by(TablePosts.date.desc())
  
     query = session.execute(stmt).all()
     return query
@@ -84,6 +84,13 @@ def get_post_num(num):
     stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).where(TablePosts.id == num)
 
     query = session.execute(stmt).one()
+
+    return query
+
+def get_post_by_cat(category):
+    stmt = select(TablePosts.id, TablePosts.title, TablePosts.content, TableUsers.username, TablePosts.date, TableCategories.caption).join(TableUsers, TablePosts.author_id == TableUsers.id).join(TableCategories, TablePosts.category_id == TableCategories.id).where(TableCategories.caption == category)
+
+    query = session.execute(stmt).all()
 
     return query
 
@@ -124,7 +131,8 @@ def insert_post(title, data, author, category, date):
     post = TablePosts(title=title, 
                       content=data, 
                       author_id=get_author(author)[0],
-                      category_id=get_category(category)[0])
+                      category_id=get_category(category)[0],
+                      date=date)
     print("Insert new post")                    
     session.add(post)
     session.commit()

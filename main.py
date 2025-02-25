@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import request
+from flask import session
 
 from datetime import datetime
 
@@ -25,7 +26,7 @@ app = Flask(__name__)
 logged_user = "zyx"
 
 menu = [{"caption":"index","href":"http://127.0.0.1:5000/"},{"caption":"login","href":"/login"},{"caption":"about","href":"/about"}]
-menu_admin = [{"caption":"index","href":"http://127.0.0.1:5000/"},{"caption":"write", "href":"/write"},{"caption":"login","href":"/login"},{"caption":"about","href":"/about"}]
+menu_admin = [{"caption":"index","href":"http://127.0.0.1:5000/"},{"caption":"write", "href":"/write"},{"caption":"logout","href":"/logout"},{"caption":"about","href":"/about"}]
 
 f = {"author":"Woo"}
 
@@ -37,15 +38,24 @@ app.config.from_pyfile('config.cfg')
 def index_page():
     posts=get_last_posts(LIST_SIZE)
     cats=get_all_categories()
-    return render_template("posts.html", menubar=menu, categories=cats, content=posts, footer=f)
+    if 'username' in session:
+        return render_template("posts.html", menubar=menu_admin, categories=cats, content=posts, footer=f)
+    else:
+        return render_template("posts.html", menubar=menu, categories=cats, content=posts, footer=f)
 
 @app.route('/posts/<int:index>')
 def post_page(index):
     cats=get_all_categories()
-    return render_template("post.html", menubar=menu, categories=cats, content=get_post_no(index), footer=f)
+    if 'username' in session:
+        return render_template("post.html", menubar=menu_admin, categories=cats, content=get_post_no(index), footer=f)
+    else:
+        return render_template("post.html", menubar=menu, categories=cats, content=get_post_no(index), footer=f)
+
 
 @app.route('/login')
 def login_page():
+    #if request.method == 'POST':
+        # request.form['username']
     return render_template("login.html", menubar=menu, footer=f)
 
 @app.route('/about')
@@ -75,14 +85,11 @@ def write_page():
                   request.form['title'],
                   request.form['data'],
                   logged_user,
-                  datetime.now().strftime("%Y/%m/%d %H:%M"),
+                  datetime.now().strftime("%Y-%m-%d %H:%M"),
                   request.form['category']
                   ])
         p.add_post()
-        return render_template("edit.html", menubar=menu, footer=f)
-
-    else:    
-        return render_template("edit.html", menubar=menu, footer=f)
+    return render_template("edit.html", menubar=menu_admin, footer=f)
 
 #@app.route('/submit', methods=['POST'])
 #    title = request.form("title")
