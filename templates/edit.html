@@ -5,14 +5,17 @@
 	<h1>Créer un post</h1>
 	<script src="//js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
 	<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
-	
+	{% if id %}
+	<form action="/write/{{ id }}" method='POST'>
+	{% else %}
 	<form action="/write" method='POST'>
+	{% endif %}
 		<label>Titre:</label><br />
-		<input type="text" id="title" name="title"><br />
+		<input value="{{ title }}" type="text" id="title" name="title"><br />
 		<label>Catégorie:</label><br />
-		<input type="text" id="category" name="category"><br />
+		<input value="{{ category }}" type="text" id="category" name="category"><br />
 		<label>Contenu:</label><br />
-		<textarea id="data" name="data" rows="20" cols="80"></textarea>
+		<textarea id="data" name="data" rows="20" cols="80">{{ content }}</textarea>
 		<button type="submit">Envoyer</button><br />
 	</form>
  </section>

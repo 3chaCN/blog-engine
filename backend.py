@@ -5,7 +5,7 @@ from sqlalchemy import literal_column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import String, Text, ForeignKey
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update, delete
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -137,6 +137,18 @@ def insert_post(title, data, author, category, date):
     print("Insert new post")                    
     session.add(post)
     session.commit()
+
+def update_post(index, title, data, author, category):
+    stmt = update(TablePosts).where(TablePosts.id == index).values(title=title, 
+                      content=data, 
+                      author_id=get_author(author)[0],
+                      category_id=get_category(category)[0])
+    print("Update post")
+    session.execute(stmt)
+
+def delete_post(index):
+    stmt = delete(TablePosts).where(TablePosts.id == index)
+    session.execute(stmt)
 
 def check_password(username, password):
     stmt = select(TableUsers.username, literal_column(f"blog.users.password = crypt('{password}', password)").label("p")).where(TableUsers.username == f"{username}")

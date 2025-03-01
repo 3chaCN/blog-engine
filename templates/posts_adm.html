@@ -7,7 +7,9 @@
                         <div id="{{ pub.get_id() }}">
 				<h2><a href="/posts/{{ pub.get_id() }}">{{ pub.get_title() }}</a></h2>
 				<em>Par {{ pub.get_author() }} le {{ pub.get_date() }}</em>
-				<a href="write/">edit</a> <a href="remove/{{ pub.get_id() }}</a>
+				<div class="post-action">
+					<a href="write/{{ pub.get_id() }}">edit</a> <a href="remove/{{ pub.get_id() }}">remove</a>
+				</div>
                                 <p>{{ pub.get_content()|safe }}</p>
                         </div>
                 {% endfor %}

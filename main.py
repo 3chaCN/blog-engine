@@ -105,8 +105,40 @@ def write_page():
         return render_template("edit.html", menubar=menu_admin, footer=f)
     else:
         return redirect(url_for('index_page'))
-#@app.route('/remove/<int:index>')
-#def remove_post():
+
+@app.route('/write/<int:index>', methods=['POST', 'GET'])
+def edit_page(index):
+    if 'username' in session:
+        p = get_post_no(index)
+
+        if request.method == 'POST':
+            print(request.form['title'])
+            print(request.form['category'])
+            print(request.form['data'])
+
+            try:
+                c = Category(get_category(request.form['category']))
+            except:
+                c = Category(["-1", request.form['category']])
+                c.add_category()
+            
+            p.id = index
+            p.title = request.form['title']
+            p.category = request.form['category']
+            p.content = request.form['data']
+            p.modify_post()
+            return redirect(url_for('index_page'))
+        else:
+            return render_template("edit.html", menubar=menu_admin, id=p.id, title=p.get_title(), category=p.get_category(), content=p.get_content(), footer=f)
+    else:
+        return redirect(url_for('index_page'))
+
+@app.route('/remove/<int:index>')
+def remove_post(index):
+    if 'username' in session:
+        p = get_post_no(index)
+        p.remove_post()
+    return redirect(url_for('index_page'))
 
 #@app.route('/submit', methods=['POST'])
 #    title = request.form("title")

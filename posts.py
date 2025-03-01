@@ -3,6 +3,8 @@ from backend import get_post_num
 from backend import get_author
 from backend import get_category
 from backend import insert_post 
+from backend import update_post
+from backend import delete_post
 
 class Post():
     def __init__(self, args=None):
@@ -41,9 +43,15 @@ class Post():
                     self.author, 
                     self.category, 
                     self.date)
+    def modify_post(self):
+        update_post(self.id,
+                    self.title,
+                    self.content, 
+                    self.author, 
+                    self.category)
 
     def remove_post(self):
-        pass
+        delete_post(self.id) 
 
 def get_last_posts(count):
     posts = []
