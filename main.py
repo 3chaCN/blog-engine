@@ -21,7 +21,7 @@ LIST_SIZE=10
 #posts = get_last_posts(LIST_SIZE)
 #cats = get_all_categories()
 app = Flask(__name__)
-app.secret_key = b'8ff8aeb6c5b82390529df563b5040c226f13cb336f973d1f52cea48c38f0ce7e' 
+#app.secret_key = b'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' 
 
 #topmenu = ["index", "about"]
 #navitm = {"index" : ["item 1", "item 2", "item 3"], "about":["item 1"]}
